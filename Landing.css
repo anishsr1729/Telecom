@@ -1,0 +1,113 @@
+/* Landing Page Styles */
+
+/* General Styles for the Landing Page */
+.landing-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('C:\Users\agrah\OneDrive\Desktop\LumenHackFrontend\telecom-inventory\public\images\TeleTitans.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Dark Overlay for Text Contrast */
+  .landing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* Dark overlay for better text visibility */
+    z-index: 1;
+  }
+  
+  /* Content inside the Landing Section */
+  .landing-content {
+    z-index: 2;  /* Ensures content is above the overlay */
+    padding: 50px 20px;
+    text-align: center;
+    max-width: 600px;  /* Limits the width of the content */
+    margin: 0 auto;
+  }
+  
+  /* Heading Style */
+  .landing-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);  /* Adds text shadow for readability */
+  }
+  
+  /* Subheading Style */
+  .landing-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #dcdcdc;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Button Style */
+  .landing-button {
+    padding: 15px 30px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Add smooth transition */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  /* Subtle shadow for depth */
+  }
+  
+  .landing-button:hover {
+    background-color: #e77d00;  /* Darken on hover */
+    transform: translateY(-4px);  /* Slight lift effect on hover */
+  }
+  
+  .landing-button:focus {
+    outline: none;
+  }
+  
+  /* Button text */
+  .landing-button a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  /* Button text hover */
+  .landing-button:hover a {
+    color: #fff;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .landing-content h1 {
+      font-size: 2.5rem;  /* Slightly smaller heading on smaller screens */
+    }
+  
+    .landing-content p {
+      font-size: 1rem;  /* Smaller subheading on smaller screens */
+    }
+  
+    .landing-button {
+      padding: 12px 25px;  /* Smaller button padding on mobile */
+      font-size: 1rem;
+    }
+  }
+  

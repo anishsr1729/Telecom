@@ -1,0 +1,135 @@
+/* Common Styles for Login and Signup Pages */
+
+/* General Styles for the Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /*background-image: url('/images/landing-bg.jpg');  Same background image as landing page */
+    background-image: url('C:\Users\agrah\OneDrive\Desktop\LumenHackFrontend\telecom-inventory\public\images\TeleTitans.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Dark Overlay for Text Contrast */
+  .auth-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* Dark overlay for better text visibility */
+    z-index: 1;
+  }
+  
+  /* Content inside the Login/Signup Section */
+  .auth-form-container {
+    z-index: 2;  /* Ensures content is above the overlay */
+    padding: 40px 20px;
+    max-width: 400px;  /* Limits the width of the form */
+    width: 100%;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Slight dark background for the form */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Heading Style */
+  .auth-form-container h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+  }
+  
+  /* Form input fields */
+  .auth-form-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 50px;  /* Rounded edges */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .auth-form-container input:focus {
+    border-color: #ff8c00; /* Focused border color */
+    outline: none;
+  }
+  
+  /* Submit Button */
+  .auth-form-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 50px; /* Rounded edges */
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .auth-form-container button:hover {
+    background-color: #e77d00;  /* Darken on hover */
+    transform: translateY(-4px); /* Slight lift effect */
+  }
+  
+  .auth-form-container .switch-link {
+    display: block;
+    margin-top: 15px;
+    font-size: 1rem;
+  }
+  
+  .auth-form-container .switch-link a {
+    color: #ff8c00;
+    text-decoration: none;
+  }
+  
+  .auth-form-container .switch-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .auth-form-container h2 {
+      font-size: 2rem;  /* Smaller heading on mobile */
+    }
+  
+    .auth-form-container input {
+      padding: 10px;  /* Smaller input fields */
+    }
+  
+    .auth-form-container button {
+      padding: 10px;  /* Smaller button */
+    }
+  }
+  
+  /* Dropdown for selecting role */
+.auth-form-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 50px;  /* Rounded edges */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .auth-form-container select:focus {
+    border-color: #ff8c00;  /* Focused border color */
+    outline: none;
+  }
+  
