@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecom Inventory Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* White background */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #004d99; /* Blue text */
+            width: 100%;
+            position: absolute;
+            top: 20px; /* Slightly adjust the top margin */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown button {
+            background-color: #003366; /* Darker blue for the button */
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            list-style: none; /* Remove any list bullet points */
+            padding: 0; /* Remove padding */
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            display: none;
+            margin-top: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #004d99;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #003366;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: center;
+            color: #004d99;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Role-specific background colors */
+        .admin-bg {
+            background-color: #e6f7ff; /* Light blue for Admin */
+        }
+
+        .manager-bg {
+            background-color: #cce0ff; /* Lighter blue for Manager */
+        }
+
+        .staff-bg {
+            background-color: #b3d1ff; /* Light blue for Staff */
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                font-size: 28px; /* Adjust header size for mobile */
+                margin-bottom: 15px;
+            }
+
+            .dropdown button {
+                padding: 8px 16px; /* Adjust button padding for mobile */
+                font-size: 14px;
+            }
+
+            .container {
+                width: 80%; /* Make the login container wider on mobile */
+                padding: 15px;
+            }
+
+            input, button {
+                padding: 12px; /* Increase padding for easier touch on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 24px; /* Further adjust for very small screens */
+            }
+
+            .dropdown button {
+                font-size: 12px; /* Smaller button text for small screens */
+                padding: 8px 12px;
+            }
+
+            .container {
+                width: 90%; /* Full width of the screen */
+                padding: 10px;
+            }
+
+            input, button {
+                padding: 14px; /* Make buttons and inputs larger on small screens */
+            }
+
+            .forgot-password {
+                font-size: 12px; /* Adjust the font size of the forgot password link */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <i>📱</i> Telecom Inventory Management System <i>➡</i>
+    </header>
+
+    <!-- Dropdown for selecting login type -->
+    <div class="dropdown">
+        <button>Select Login Type</button>
+        <div class="dropdown-content">
+            <a href="#" onclick="showLogin('Admin')">Admin Login</a>
+            <a href="#" onclick="showLogin('Manager')">Manager Login</a>
+            <a href="#" onclick="showLogin('Staff')">Staff Login</a>
+            <a href="#" onclick="showRegister()">Register</a> <!-- Added Register link -->
+        </div>
+    </div>
+
+    <!-- Login Form for Admin/Manager/Staff -->
+    <div id="loginContainer" class="container">
+        <h2 id="loginTitle">Login</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p id="errorMessage" class="error"></p>
+        <!-- Forgot Password Link -->
+        <a href="#" class="forgot-password" onclick="forgotPassword()">Forgot Password?</a>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerContainer" class="container">
+        <h2>Register</h2>
+        <input type="text" id="registerUsername" placeholder="Username" required>
+        <input type="password" id="registerPassword" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button onclick="register()">Register</button>
+        <p id="registerError" class="error"></p>
+        <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+
+    <script>
+        // Show Login or Register form
+        function showLogin(role) {
+            const loginContainer = document.getElementById('loginContainer');
+            const registerContainer = document.getElementById('registerContainer');
+            loginContainer.style.display = 'block';
+            registerContainer.style.display = 'none';
+            document.getElementById('loginTitle').textContent = role + " Login";
+            document.getElementById('errorMessage').textContent = ''; // Clear any previous error message
+            
+            // Remove previous background color classes
+            loginContainer.classList.remove('admin-bg', 'manager-bg', 'staff-bg');
+            
+            // Add the corresponding background color for each role
+            if (role === 'Admin') {
+                loginContainer.classList.add('admin-bg');
+            } else if (role === 'Manager') {
+                loginContainer.classList.add('manager-bg');
+            } else if (role === 'Staff') {
+                loginContainer.classList.add('staff-bg');
+            }
+
+            // Store the selected role for later validation
+            sessionStorage.setItem('role', role);
+        }
+
+        // Show Register Form
+        function showRegister() {
+            const loginContainer = document.getElementById('loginContainer');
+            const registerContainer = document.getElementById('registerContainer');
+            loginContainer.style.display = 'none';
+            registerContainer.style.display = 'block';
+        }
+
+        // Handle login logic
+        function login() {
+            const role = sessionStorage.getItem('role');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Dummy data for demonstration purposes
+            const users = {
+                Admin: { username: 'admin', password: 'adminpass' },
+                Manager: { username: 'manager', password: 'managerpass' },
+                Staff: { username: 'staff', password: 'staffpass' }
+            };
+
+            // Validate login credentials
+            if (users[role]) {
+                if (username === users[role].username && password === users[role].password) {
+                    alert(role + ' login successful!');
+                } else {
+                    document.getElementById('errorMessage').textContent = "Invalid username or password.";
+                }
+            } else {
+                document.getElementById('errorMessage').textContent = "Invalid login type.";
+            }
+        }
+
+        // Handle Register logic
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Dummy registration logic (can be enhanced with server-side logic)
+            if (password === confirmPassword) {
+                alert("Registration successful! Please login.");
+                showLogin(); // Redirect to Login page
+            } else {
+                document.getElementById('registerError').textContent = "Passwords do not match.";
+            }
+        }
+
+        // Forgot Password handler
+        function forgotPassword() {
+            alert("Please contact your system administrator to reset your password.");
+        }
+    </script>
+    <a href="inventory.html">after login click hear</a>
+
+</body>
+</html>

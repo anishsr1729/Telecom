@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Alerts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Search and Filter Section */
+        .search-filter {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-filter input, .search-filter select {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        .search-filter button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-filter button:hover {
+            background-color: #45a049;
+        }
+
+        /* Product List */
+        .product-list {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-list ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-list ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .search-filter input, .search-filter select, .search-filter button {
+                font-size: 14px;
+            }
+
+            .product-list ul li {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .search-filter input, .search-filter select, .search-filter button {
+                font-size: 12px;
+            }
+
+            .product-list ul li {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Inventory Alerts Dashboard</h1>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter">
+        <input type="text" id="searchInput" placeholder="Search by product name, category, or stock level">
+        
+        <select id="filterStatus">
+            <option value="">Select Stock Status</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+        </select>
+
+        <button onclick="applySearchAndFilter()">Apply Filters</button>
+    </div>
+
+    <!-- Product List Section -->
+    <div class="product-list">
+        <h3>Product List</h3>
+        <ul id="productList">
+            <!-- Product items will be dynamically added here -->
+        </ul>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            { id: 1, name: "Product A", category: "Electronics", stock_level: 5, status: "low" },
+            { id: 2, name: "Product B", category: "Electronics", stock_level: 0, status: "out" },
+            { id: 3, name: "Product C", category: "Furniture", stock_level: 10, status: "in-stock" },
+            { id: 4, name: "Product D", category: "Clothing", stock_level: 3, status: "low" },
+            { id: 5, name: "Product E", category: "Furniture", stock_level: 0, status: "out" }
+        ];
+
+        // Display the product list
+        const productList = document.getElementById('productList');
+
+        function displayProducts(productsToDisplay) {
+            productList.innerHTML = ''; // Clear existing list
+            productsToDisplay.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = `${product.name} (Category: ${product.category}, Stock Level: ${product.stock_level}, Status: ${product.status})`;
+                productList.appendChild(li);
+            });
+        }
+
+        // Apply search and filter
+        function applySearchAndFilter() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const stockStatus = document.getElementById('filterStatus').value;
+
+            const filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery) ||
+                                      product.category.toLowerCase().includes(searchQuery) ||
+                                      product.stock_level.toString().includes(searchQuery);
+                const matchesStatus = stockStatus ? product.status === stockStatus : true;
+                return matchesSearch && matchesStatus;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        // Initialize the product list on page load
+        window.onload = () => {
+            displayProducts(products);
+        };
+    </script>
+
+</body>
+</html>
