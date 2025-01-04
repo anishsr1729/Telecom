@@ -113,3 +113,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+<?php
+// Database connection
+$conn = new mysqli('localhost', 'root', '', 'stock1');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Admin login check
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Prepare and execute the query
+    $stmt = $conn->prepare('SELECT * FROM admin WHERE username = ? AND password = ?');
+    $stmt->bind_param('ss', $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Login successful
+        echo "Admin login successful!";
+    } else {
+        // Invalid credentials
+        echo "Invalid username or password!";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
