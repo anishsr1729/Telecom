@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecom Inventory System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+ 
+        header {
+            background-color: #0078D7;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+ 
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #0056A1;
+            padding: 10px 0;
+        }
+ 
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+ 
+        nav a:hover {
+            background-color: #004080;
+        }
+ 
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+ 
+        section {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+ 
+        h2 {
+            border-bottom: 2px solid #0078D7;
+            padding-bottom: 10px;
+        }
+ 
+        .form-group {
+            margin-bottom: 15px;
+        }
+ 
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+ 
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+ 
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            color: white;
+            background-color: #0078D7;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+ 
+        .btn:hover {
+            background-color: #0056A1;
+        }
+ 
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+ 
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+ 
+        .table th {
+            background-color: #f4f4f4;
+        }
+ 
+        .alert {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: white;
+        }
+ 
+        .alert-low-stock {
+            background-color: #f39c12;
+        }
+ 
+        .alert-high-demand {
+            background-color: #e74c3c;
+        }
+ 
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+ 
+            nav a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Telecom Inventory Management System</h1>
+    </header>
+ 
+    <!-- Navigation -->
+    <nav>
+        <a href="#manage-inventory">Manage Inventory</a>
+        <a href="#alerts">Alerts</a>
+        <a href="#dashboard">Dashboard</a>
+    </nav>
+ 
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Inventory Management -->
+        <section id="manage-inventory">
+            <h2>Manage Inventory</h2>
+            <div class="form-group">
+                <label for="item-name">Item Name:</label>
+                <input type="text" id="item-name" placeholder="Enter item name">
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="routers">Routers</option>
+                    <option value="cables">Cables</option>
+                    <option value="switches">Switches</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="stock-level">Stock Level:</label>
+                <input type="number" id="stock-level" placeholder="Enter stock level">
+            </div>
+            <button class="btn" onclick="addInventory()">Add Item</button>
+ 
+            <h3>Inventory List</h3>
+            <table class="table" id="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Stock Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Inventory items will appear here -->
+                </tbody>
+            </table>
+        </section>
+ 
+        <!-- Alerts Section -->
+        <section id="alerts">
+            <h2>Alerts</h2>
+            <div id="alerts-container">
+                <!-- Alerts will appear here dynamically -->
+            </div>
+        </section>
+ 
+        <!-- Dashboard Section -->
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <div class="alert alert-low-stock">
+                <p><b>Low Stock Alert:</b> Some items are running low on stock!</p>
+            </div>
+            <div class="alert alert-high-demand">
+                <p><b>High Demand Alert:</b> Certain items are in high demand!</p>
+            </div>
+        </section>
+    </div>
+ 
+    <script>
+        const inventory = [];
+ 
+        function addInventory() {
+            const itemName = document.getElementById('item-name').value;
+            const category = document.getElementById('category').value;
+            const stockLevel = parseInt(document.getElementById('stock-level').value, 10);
+ 
+            if (!itemName || !category || isNaN(stockLevel)) {
+                alert('Please fill out all fields!');
+                return;
+            }
+ 
+            inventory.push({ itemName, category, stockLevel });
+            renderInventory();
+            checkAlerts();
+        }
+ 
+        function renderInventory() {
+            const tableBody = document.querySelector('#inventory-table tbody');
+            tableBody.innerHTML = '';
+            inventory.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.itemName}</td>
+                    <td>${item.category}</td>
+                    <td>${item.stockLevel}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+ 
+        function checkAlerts() {
+            const alertsContainer = document.getElementById('alerts-container');
+            alertsContainer.innerHTML = '';
+ 
+            inventory.forEach(item => {
+                if (item.stockLevel < 5) {
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-low-stock';
+                    alert.innerHTML = `<b>Low Stock Alert:</b> ${item.itemName} is low on stock!`;
+                    alertsContainer.appendChild(alert);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+ 

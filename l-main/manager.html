@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        .product img {
+            width: 100px;
+            height: 100px;
+        }
+        .product-info {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Product List</h1>
+
+<div id="product-list">
+    <!-- Existing Products will appear here -->
+</div>
+
+<h2>Add a Product</h2>
+<form id="addProductForm">
+    <label for="productName">Product Name:</label><br>
+    <input type="text" id="productName" required><br><br>
+    
+    <label for="productPrice">Product Price:</label><br>
+    <input type="number" id="productPrice" required><br><br>
+    
+    <label for="productImage">Product Image URL:</label><br>
+    <input type="text" id="productImage" required><br><br>
+    
+    <input type="submit" value="Add Product">
+</form>
+
+<script>
+// Function to add product to the product list
+function addProductToList(name, price, image) {
+    const productList = document.getElementById('product-list');
+    
+    const productDiv = document.createElement('div');
+    productDiv.classList.add('product');
+    
+    productDiv.innerHTML = `
+        <img src="${image}" alt="${name}">
+        <div class="product-info">
+            <h3>${name}</h3>
+            <p>Price: $${price}</p>
+        </div>
+    `;
+    
+    productList.appendChild(productDiv);
+}
+
+// Handle form submission
+document.getElementById('addProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('productName').value;
+    const price = document.getElementById('productPrice').value;
+    const image = document.getElementById('productImage').value;
+
+    // Add the new product to the list
+    addProductToList(name, price, image);
+
+    // Reset the form
+    document.getElementById('addProductForm').reset();
+});
+</script>
+
+</body>
+</html>
